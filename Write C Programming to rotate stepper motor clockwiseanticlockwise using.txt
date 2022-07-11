@@ -1,0 +1,25 @@
+#include "lpc17xx.h"
+void delay(unsigned int x);
+unsigned char a;
+int main (void)
+{
+LPC_GPIO0->FIODIR |= (0xf<<27) /* Configure P0.27,P0.28,P0.29,P0.30 as Outputs */
+LPC_GPIO1->FIODIR |= (1<<24); // supply
+while(1)
+ {
+
+ LPC_GPIO0->FIOPIN =(1<<27);
+ delay(50000);
+ LPC_GPIO0->FIOPIN =(2<<27);
+ delay(50000);
+ LPC_GPIO0->FIOPIN =(4<<27);
+ delay(50000);
+ LPC_GPIO0->FIOPIN =(8<<27);
+ delay(50000);
+}
+}
+ void delay(unsigned int x)
+{
+ unsigned int i;
+ for(i=0;i<=x;i++);
+ }

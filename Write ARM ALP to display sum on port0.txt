@@ -1,0 +1,38 @@
+area reset,data,readonly
+ export __Vectors
+__Vectors
+ dcd 0
+ dcd Reset_Handler
+
+
+ area mycode,code,readonly
+
+FIO0DIR equ 0x2009c000
+FIO0MASK equ 0x2009c010
+FIO0PIN equ 0x2009c014
+FIO0SET equ 0x2009c018
+FIO0CLR equ 0x2009c01c
+ entry
+ export Reset_Handler
+Reset_Handler
+ ldr r0,=0x12345678
+ ldr r1,=0x11111111
+
+ adds r2,r0,r1 ; r2 = r0 + r1
+ rev r3,r2
+
+ ldr r4,=sum
+ str r3,[r4]
+
+ ldr r5,=FIO0DIR
+ ldr r6,=0xffffffff ; port0 is configured as o/p port
+ str r6,[r5]
+
+ ldr r7,=FIO0PIN
+ str r2,[r7] ; send sum to port0 through FIOPIN register
+
+
+stop b stop
+ area mydata,data,readwrite
+sum space 0
+ end

@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include "lpc17xx.h"
+void delay(uint32_t);
+int main (void)
+{
+ LPC_GPIO1->FIODIR | = (1<<28) | (1<<31)
+ LPC_GPIO2->FIODIR | = (1<<2) | (1<<6)
+ while(1)
+ {
+ LPC_GPIO1->FIOSET | = (1<<28) | (1<<31)
+ LPC_GPIO2->FIOSET | = (1<<2) | (1<<6)
+delay(100000);
+ LPC_GPIO1->FIOCLR | = (1<<28) | (1<<31)
+ LPC_GPIO2->FIOCLR | = (1<<2) | (1<<6)
+delay(100000);
+ }
+}
+ void delay(uint32_t i)
+{
+uint32_t x;
+for(x=0;x<=i;x++);
+}

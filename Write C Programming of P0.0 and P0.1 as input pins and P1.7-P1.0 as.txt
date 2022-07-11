@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include "lpc17xx.h"
+uint32_t value;
+int main (void)
+{
+LPC_GPIO0->FIODIR = 0xffffffff; /* LEDs on PORT0 are output */
+LPC_GPIO1->FIODIR &=~(3<<0) ; // p1.1-p1.0 as input
+while(1)
+{
+ value = ((LPC_GPIO1->FIOPIN & (3<<0))>>0) ;// read the switch status
+
+switch(value)
+{
+case (0):
+LPC_GPIO0->FIOSET =(1<<0);
+break;
+case (1):
+LPC_GPIO0->FIOSET =(1<<8);
+break;
+case (2):
+LPC_GPIO0->FIOSET =(1<<16);
+break;
+case (3):
+LPC_GPIO0->FIOSET =(1<<24);
+break;
+}
+}
+}

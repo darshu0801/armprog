@@ -1,0 +1,23 @@
+area reset,data,readonly
+ export __Vectors
+__Vectors
+ dcd 0
+ dcd Reset_Handler
+
+
+ area mycode,code,readonly
+ entry
+ export Reset_Handler
+Reset_Handler
+; Binary(0x01 to 0x09) = Ascii(0x30 to 0x39)
+; Binary (0x0a to 0x0f)= Ascii(0x41 to 0x46)
+ mov r0,#0xc ; binary number say 0xc
+ cmp r0,#0x0a
+ bne nxt
+ beq nxt1
+nxt blt nxt2
+nxt1 add r2,r0,#0x37 ; add 0x37 if morethan 9
+ b stop
+nxt2 add r2,r0,#0x30 ;add 0x30 if lessthan a
+stop b stop
+end

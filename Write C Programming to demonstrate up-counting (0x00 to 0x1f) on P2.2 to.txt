@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include "lpc17xx.h"
+uint32_t x,y,a,b;
+void delay(uint32_t);
+int main (void)
+{
+LPC_GPIO2->FIODIR |= (0x1f<<2); // LEDs on PORT2are output
+
+ while(1)
+ {
+for(a=0x00 ;a<=0x1f;a++)
+{
+LPC_GPIO0->FIOPIN = (a<<2);
+ delay(10000000);
+ }
+ }
+}
+
+ void delay(uint32_t i)
+{
+uint32_t x;
+for (x=0;x<=i;x++);
+}

@@ -1,0 +1,21 @@
+area reset,data,readonly
+ export __Vectors
+__Vectors
+ dcd 0x10001000;initialization of stack pointer
+ dcd Reset_Handler ;initilization of PC
+
+ area mycode,code,readonly
+ entry
+ export Reset_Handler
+Reset_Handler
+ mov r0,#10
+ldr r1,=data1
+mov r2,#1 ;mov r2,#0 for even numbers
+cont strb r2,[r1],#1
+ add r2,r2,#2
+subs r0,r0,#1
+bne cont
+stop b stop
+ area mydata,data,readwrite
+data1 space 0
+ end

@@ -1,0 +1,33 @@
+area reset,data,readonly
+ export __Vectors
+__Vectors
+
+ dcd 0
+ dcd Reset_Handler
+
+
+ area mycode,code,readonly
+ entry
+ export Reset_Handler
+Reset_Handler
+ ; 1st no. = 0x77777777 99999999
+ ; 2nd no. = 0x66666666 80000000
+ ldr r0,=0x77777777 ;higher word of 1st no.
+ ldr r1,=0x99999999 ;lower word of 1st no.
+ ldr r2,=0x66666666 ;higher word of 2nd no.
+ ldr r3,=0x80000000 ;lower word of 2nd no.
+ adds r4,r1,r3;lower word result
+ adc r5,r0,r2 ;higher word result
+
+ ldr r6,=sum
+ rev r7,r5
+ str r7,[r6],#4 ; higher word result
+ rev r8,r4
+ str r8,[r6] ; lower word result
+
+
+stop b stop
+ area mydata,data,readwrite
+sum space 0
+
+ end

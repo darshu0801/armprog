@@ -1,0 +1,22 @@
+area reset,data,readonly
+ export __Vectors
+__Vectors
+ dcd 0
+ dcd Reset_Handler
+
+
+ area mycode,code,readonly
+ entry
+ export Reset_Handler
+Reset_Handler
+ mov r1,#2
+ mov r2,#3
+ mov r3,#4
+ add r1,r1,r1,lsl#1 ;r1=3x
+ mov r2,r2,lsl#2 ;r2=4y
+ add r3,r3,r3,lsl#3 ;r3=9z
+ add r1,r1,r2 ;r1=r1+r2 ie. 3x+4y
+ add r1,r1,r3 ;r1=r1+r3 ie. 3x+4y+9z
+
+stop b stop
+ end

@@ -1,0 +1,40 @@
+area reset,data,readonly
+ export __Vectors
+__Vectors
+
+ dcd 0
+ dcd Reset_Handler
+
+
+ area mycode,code,readonly
+n equ 4
+ entry
+ export Reset_Handler
+Reset_Handler
+ mov r0,#n ;no. of words
+
+ ldr r1,=array1+12 ;1st array
+ ldr r2,=array2+12 ;2nd array
+ ldr r3,=array3+16;result
+
+cont ldr r4,[r1],#-4
+ ldr r5,[r2],#-4
+ adcs r6,r4,r5
+ rev r7,r6
+ str r7,[r3],#-4
+
+ subs r0,r0,#1
+ cmp r0,#0
+ bne cont
+ bcc stop ;if no carry stop
+ mov r8,#1
+ rev r9,r8
+ str r9,[r3]
+
+stop b stop
+
+array1 dcd 0x11111111,0x22222222,0x33333333,0x44444444
+array2 dcd 0xf5555555,0xf6666666,0xf7777777,0xf8888888
+area mydata,data,readwrite
+array3 dcd 0
+ end

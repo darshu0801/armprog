@@ -1,0 +1,22 @@
+area reset,data,readonly
+ export __Vectors
+__Vectors
+ dcd 0; initilization of stack memory
+ dcd Reset_Handler
+ area mycode,code,readonly
+entry
+export Reset_Handler
+Reset_Handler
+ mov r0,#5
+ldr r1,=src
+ldr r2,=dst
+cntd ldr r3,[r1],#4
+str r3,[r2],#4
+subs r0,r0,#1
+cmp r0,#0
+bne cntd
+stop b stop
+src dcd 0x12345678, 0xabcdef01, 0x87654321, 0x1379ace1,0x98765432
+ area mydata,data,readwrite
+dst space 0
+ end

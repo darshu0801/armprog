@@ -1,0 +1,26 @@
+area reset,data,readonly
+ export __Vectors
+__Vectors
+ dcd 0
+ dcd Reset_Handler
+
+
+ area hello,code,readonly
+
+ entry
+ export Reset_Handler
+Reset_Handler
+;using sub instruction
+ ldr r0,= 0x55555555
+ ldr r1,= 0x22222222
+ subs r2,r0,r1
+
+;using mvn instruction based on 2's complement
+ ldr r3,= 0x66666666
+ ldr r4,= 0x22222222
+
+ mvn r5,r4 ;1's complement
+ adds r6,r3,r5
+ adds r6,r6,#1 ; 2's complement
+stop b stop
+ end
